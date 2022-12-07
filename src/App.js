@@ -1,5 +1,15 @@
+const BridgeGame = require('./BridgeGame.js');
+
 class App {
-  play() {}
+  #bridgeGame;
+  play() {
+    this.playGame();
+  }
+
+  playGame() {
+    this.#bridgeGame = new BridgeGame();
+    return this.#bridgeGame.gameProccess();
+  }
 }
 
 const app = new App();

@@ -8,7 +8,7 @@ class App {
 
   playGame() {
     this.#bridgeGame = new BridgeGame();
-    return this.#bridgeGame.gameProccess();
+    return this.#bridgeGame.initialProcess();
   }
 }
 

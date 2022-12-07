@@ -10,6 +10,11 @@ OutputView의 메서드의 이름은 변경할 수 없고, 인자는 필요에 �
 */
 const { Console } = require('@woowacourse/mission-utils');
 
+const PREFIX = '\n[ERROR] ';
+const ERROR_MESSAGE = {
+  BRIDGE_SIZE: '다리 길이는 3부터 20 사이의 숫자여야 합니다.\n',
+};
+
 const OutputView = {
   printWelcome() {
     Console.print('다리 건너기 게임을 시작합니다.\n');
@@ -28,6 +33,10 @@ const OutputView = {
    * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
   printResult() {},
+
+  printError(errorType) {
+    Console.print(PREFIX + ERROR_MESSAGE[errorType]);
+  },
 };
 
 module.exports = OutputView;

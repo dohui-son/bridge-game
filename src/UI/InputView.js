@@ -8,11 +8,15 @@ InputView의 메서드의 인자는 변경할 수 있다.
 /**
  * 사용자로부터 입력을 받는 역할을 한다.
  */
+const { Console } = require('@woowacourse/mission-utils');
+
 const InputView = {
   /**
    * 다리의 길이를 입력받는다.
    */
-  readBridgeSize() {},
+  readBridgeSize(callback) {
+    Console.readLine('다리의 길이를 입력해주세요.', callback);
+  },
 
   /**
    * 사용자가 이동할 칸을 입력받는다.

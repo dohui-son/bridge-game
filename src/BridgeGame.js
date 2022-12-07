@@ -17,7 +17,8 @@ class BridgeGame {
 
   constructor() {
     OutputView.printWelcome();
-    this.initialProcess();
+    //this.initialProcess();
+    this.#bridgeSize = BridgeGameHandler.bridgeSizer();
   }
 
   /**
@@ -35,12 +36,7 @@ class BridgeGame {
   retry() {}
 
   initialProcess() {
-    this.#bridgeSize = BridgeGameHandler.bridgeSizer();
-  }
-
-  bridgeGenerator(size) {
-    this.#bridgeSize = size;
-    console.log(size); // 테스트용
+    this.#bridgeSize = BridgeGameHandler.bridgeSizer.bind(this);
   }
 }
 

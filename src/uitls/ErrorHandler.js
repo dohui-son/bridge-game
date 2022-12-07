@@ -1,11 +1,11 @@
 const OutputView = require('../UI/OutputView.js');
 
 const ErrorHandler = {
-  inputCatcher(inputType, value, callback) {
+  bridgeSizeCatcher(value, callback) {
     try {
       callback(value);
     } catch (error) {
-      OutputView.printError(inputType);
+      OutputView.printError('BRIDGE_SIZE');
       return false;
     }
     return true;

@@ -15,13 +15,15 @@ const VALIDATE_TABLE = {
 
 const Validator = {
   validBridgeSize(bridgeSize) {
-    const RESULT = ErrorHandler.inputCatcher('BRIDGE_SIZE', bridgeSize, VALIDATE_TABLE['BRIDGE_SIZE']);
+    const IS_VALID = ErrorHandler.bridgeSizeCatcher(bridgeSize, VALIDATE_TABLE['BRIDGE_SIZE']);
 
-    if (!RESULT) {
+    if (!IS_VALID) {
       this.bridgeSizer();
       return false;
     }
-    return true;
+    if (IS_VALID) {
+      return true;
+    }
   },
 };
 

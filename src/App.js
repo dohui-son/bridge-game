@@ -1,4 +1,5 @@
 const BridgeGame = require('./BridgeGame.js');
+const BridgeGameHandler = require('./uitls/BridgeGameHandler.js');
 
 class App {
   #bridgeGame;
@@ -8,7 +9,6 @@ class App {
 
   playGame() {
     this.#bridgeGame = new BridgeGame();
-    return this.#bridgeGame.initialProcess();
   }
 }
 

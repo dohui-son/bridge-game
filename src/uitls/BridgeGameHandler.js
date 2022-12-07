@@ -8,11 +8,9 @@ const BridgeGameHandler = {
       if (IS_VALID) {
         console.log('성공 - 제대로 다리 길이 입력됨');
         const BRIDGE_SIZE = parseInt(bridgeSize);
-        console.log(BRIDGE_SIZE);
 
         return BRIDGE_SIZE;
       }
-      return 1;
     });
   },
 };

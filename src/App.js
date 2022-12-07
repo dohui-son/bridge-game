@@ -1,5 +1,6 @@
 const BridgeGame = require('./BridgeGame.js');
 const BridgeGameHandler = require('./uitls/BridgeGameHandler.js');
+const { runGenerator } = require('./uitls/Generator.js');
 
 class App {
   #bridgeGame;
@@ -9,6 +10,7 @@ class App {
 
   playGame() {
     this.#bridgeGame = new BridgeGame();
+    const HI = yield this.#bridgeGame.initialProcess();
   }
 }
 

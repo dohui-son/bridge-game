@@ -1,16 +1,32 @@
 const BridgeGame = require('./BridgeGame.js');
 const BridgeGameHandler = require('./uitls/BridgeGameHandler.js');
-const { runGenerator } = require('./uitls/Generator.js');
+
+const OutputView = require('./UI/OutputView.js');
 
 class App {
   #bridgeGame;
   play() {
-    this.playGame();
+    this.runGenerator(this.#playGame.bind(this));
   }
 
-  playGame() {
+  *#playGame() {
+    OutputView.printWelcome();
     this.#bridgeGame = new BridgeGame();
-    const HI = yield this.#bridgeGame.initialProcess();
+    const BRIDGE_SIZE = yield (resolve) => BridgeGameHandler.bridgeSizer(resolve);
+    console.log(BRIDGE_SIZE);
+  }
+
+  tryCatch(callback) {
+    try {
+      callback();
+    } catch (error) {
+      this.errorHandler(error);
+    }
+  }
+
+  errorHandler(error) {
+    console.log(error);
+    console.log(error.name);
   }
 }
 

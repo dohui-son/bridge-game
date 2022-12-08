@@ -7,6 +7,13 @@ class Bridge {
   constructor(bridgeSize) {
     this.#bridgeArray = makeBridge(bridgeSize, generate);
   }
+
+  bridgeMovable(movement, bridgeIndex) {
+    if (movement === this.#bridgeArray[bridgeIndex]) {
+      return true;
+    }
+    return false;
+  }
 }
 
 module.exports = Bridge;

@@ -1,7 +1,7 @@
 const InputView = require('../UI/InputView.js');
 const Validator = require('./Validator.js');
 
-const BridgeGameHandler = {
+const GameHandler = {
   //Todo: Generator
   // bridgeSizer() {
   //   InputView.readBridgeSize((bridgeSize) => {
@@ -16,4 +16,4 @@ const BridgeGameHandler = {
   // },
 };
 
-module.exports = BridgeGameHandler;
+module.exports = GameHandler;

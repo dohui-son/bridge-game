@@ -1,5 +1,14 @@
+/*REQUIREMENTS
+
+*/
+
+const Game = require('../src/components/Game.js');
+
 class App {
-  play() {}
+	#game;
+	play() {
+		game = new Game();
+	}
 }
 
 const app = new App();

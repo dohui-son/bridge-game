@@ -9,8 +9,8 @@ BridgeMaker의 파일 경로는 변경할 수 없다.
 BridgeMaker의 메서드의 시그니처(인자, 이름)와 반환 타입은 변경할 수 없다.
 */
 
-const BridgeGameHandler = require('./uitls/BridgeGameHandler.js');
-const OutputView = require('./UI/OutputView.js');
+const BridgeGameHandler = require("./uitls/BridgeGameHandler.js");
+const OutputView = require("./UI/OutputView.js");
 
 class BridgeGame {
   #bridgeSize;
@@ -33,13 +33,13 @@ class BridgeGame {
    */
   retry() {}
 
-  initialProcess() {
-    return BridgeGameHandler.bridgeSizer();
-  }
+  // initialProcess() {
+  //   return BridgeGameHandler.bridgeSizer();
+  // }
 
-  createBridge(input) {
-    console.log(input);
-  }
+  // createBridge(input) {
+  //   console.log(input);
+  // }
 }
 
 module.exports = BridgeGame;

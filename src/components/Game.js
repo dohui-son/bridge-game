@@ -34,7 +34,18 @@ class Game {
     });
   }
 
-  postAction(moveResult) {}
+  postAction(moveResult) {
+    if (!moveResult) {
+      // 실패
+    }
+
+    const CONTINUE = this.#bridgeGame.gameHistoryStatus();
+    if (CONTINUE) {
+      this.makeMovement();
+    }
+    if (!CONTINUE) {
+    }
+  }
 
   errorHandler(errorType, callback) {
     try {

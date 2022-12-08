@@ -28,7 +28,7 @@ const OutputView = {
    */
   printMap(gameHistory) {
     for (let index = 0; index < 2; index++) {
-      const FROMATTED_MAP = '[ ' + gameHistory[index].join(' | ') + ']';
+      const FROMATTED_MAP = '[ ' + gameHistory[index].join(' | ') + ' ]';
       Console.print(FROMATTED_MAP);
     }
   },

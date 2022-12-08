@@ -13,20 +13,20 @@ class Game {
   }
 
   createBridge(bridgeSize) {
-    this.errorHandler('BRIDGE_SIZE', () => {
+    this.#errorHandler('BRIDGE_SIZE', () => {
       this.#bridgeGame = new BridgeGame(bridgeSize);
       this.#bridgeSize = parseInt(bridgeSize);
-      return this.makeMovement();
+      return InputView.readMoving.bind(this)(this.moveProcess); //this.makeMovement();
     });
   }
 
-  makeMovement() {
-    // this.errorHandler('MOVEMENT', () => { . --> 여기 try catch 적용해줄 필요 없음
-    InputView.readMoving.bind(this)(this.moveProcess);
-  }
+  //   makeMovement() {
+  //     // this.errorHandler('MOVEMENT', () => { . --> 여기 try catch 적용해줄 필요 없음
+  //     InputView.readMoving.bind(this)(this.moveProcess);
+  //   }
 
   moveProcess(movement) {
-    this.errorHandler('MOVEMENT', () => {
+    this.#errorHandler('MOVEMENT', () => {
       Validator.validMovement(movement);
       const MOVE_RESULT = this.#bridgeGame.move(movement);
       this.#bridgeGame.gameHistoryStatus();
@@ -36,26 +36,33 @@ class Game {
 
   postAction(moveResult) {
     if (!moveResult) {
-      // 실패
+      // 실패 - 게임 다시 할지 물어보고 다시하면 retry 메서드 작성해주기
+      return InputView.readGameCommand.bind(this)(this.askRetry);
     }
 
-    const CONTINUE = this.#bridgeGame.gameHistoryStatus();
+    const CONTINUE = this.#bridgeGame.gameStatus();
     if (CONTINUE) {
+      // 게임 계속
       this.makeMovement();
     }
     if (!CONTINUE) {
+      // 게임을 성공적으로 마침!
     }
   }
 
-  errorHandler(errorType, callback) {
+  lostProcess(retryCommand) {
+    this.#errorHandler('RETRY', () => {});
+  }
+
+  #errorHandler(errorType, callback) {
     try {
       callback();
     } catch (error) {
-      this.errorResponse(errorType);
+      this.#errorResponse(errorType);
     }
   }
 
-  errorResponse(errorType) {
+  #errorResponse(errorType) {
     OutputView.printError(errorType);
     if (errorType === 'BRIDGE_SIZE') {
       InputView.readBridgeSize.bind(this)(this.createBridge);

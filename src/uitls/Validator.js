@@ -29,17 +29,12 @@ const Validator = {
       throw new Error('[ERROR]');
     }
   },
-  //{
-  //   const IS_VALID = ErrorHandler.bridgeSizeCatcher(bridgeSize, VALIDATE_TABLE['BRIDGE_SIZE']);
 
-  //   if (!IS_VALID) {
-  //     this.bridgeSizer();
-  //     return false;
-  //   }
-  //   if (IS_VALID) {
-  //     return true;
-  //   }
-  // },
+  validRetryCommand(retry) {
+    if (retry !== 'R' && retry !== 'Q') {
+      throw new Error('[ERROR]');
+    }
+  },
 };
 
 module.exports = Validator;

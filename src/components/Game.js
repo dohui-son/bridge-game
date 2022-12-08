@@ -20,11 +20,6 @@ class Game {
     });
   }
 
-  //   makeMovement() {
-  //     // this.errorHandler('MOVEMENT', () => { . --> 여기 try catch 적용해줄 필요 없음
-  //     InputView.readMoving.bind(this)(this.moveProcess);
-  //   }
-
   moveProcess(movement) {
     this.#errorHandler('MOVEMENT', () => {
       Validator.validMovement(movement);
@@ -36,27 +31,34 @@ class Game {
 
   postAction(moveResult) {
     if (!moveResult) {
-      // 실패 - 게임 다시 할지 물어보고 다시하면 retry 메서드 작성해주기
       return InputView.readGameCommand.bind(this)(this.lostProcess);
     }
 
     const CONTINUE = this.#bridgeGame.gameStatus();
+
     if (CONTINUE) {
-      // 게임 계속
       InputView.readMoving.bind(this)(this.moveProcess);
     }
     if (!CONTINUE) {
       // 게임을 성공적으로 마침!
+      this.#endOfGame('WIN');
     }
   }
 
   lostProcess(retryCommand) {
     this.#errorHandler('RETRY', () => {
-      console.log(retryCommand);
+      Validator.validRetryCommand(retryCommand);
+      if (retryCommand === 'R') {
+        this.#bridgeGame.retry();
+        return InputView.readMoving.bind(this)(this.moveProcess);
+      }
+      if (retryCommand === 'Q') {
+        return this.#endOfGame('LOST');
+      }
     });
   }
 
-  quitGame(gameResult) {
+  #endOfGame(gameResult) {
     // Todo: 게임 결과 출력후 게임 마침 콘솔 닫아주기
   }
 
@@ -76,7 +78,9 @@ class Game {
     if (errorType === 'MOVEMENT') {
       InputView.readMoving.bind(this)(this.moveProcess);
     }
-    //OutputView.printError('BRIDGE_SIZE');
+    if (errorType === 'RETRY') {
+      InputView.readGameCommand.bind(this)(this.lostProcess);
+    }
   }
 }
 

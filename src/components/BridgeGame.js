@@ -86,8 +86,7 @@ class BridgeGame {
    */
   retry() {
     this.#gameRound += 1;
-    this.#index = 0;
-    this.#gameHistory = [[], []];
+    this.#initializeBridgeGameMeta();
   }
 
   gameConclusion(gameResult) {

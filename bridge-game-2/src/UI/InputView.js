@@ -8,11 +8,18 @@ InputView의 파일 경로는 변경할 수 있다.
 InputView의 메서드의 인자는 변경할 수 있다.
 사용자 값 입력을 위해 필요한 메서드를 추가할 수 있다.
 */
+const { Console } = require('@woowacourse/mission-utils');
+const { MESSAGE } = require('../utils/constants');
+
 const InputView = {
 	/**
 	 * 다리의 길이를 입력받는다.
 	 */
-	readBridgeSize() {},
+	readBridgeSize(callback) {
+		Console.readLine(MESSAGE['BRIDGE_SIZE'], (bridgeSize) => {
+			callback.bind(this)(bridgeSize);
+		});
+	},
 
 	/**
 	 * 사용자가 이동할 칸을 입력받는다.

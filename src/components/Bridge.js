@@ -5,7 +5,7 @@ class Bridge {
   #bridgeArray; // 이름 바꿔야함
 
   constructor(bridgeSize) {
-    //this.#bridgeArray = makeBridge(bridgeSize, generate);
+    this.#bridgeArray = makeBridge(bridgeSize, generate);
   }
 }
 

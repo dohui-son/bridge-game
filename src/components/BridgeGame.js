@@ -29,7 +29,7 @@ class BridgeGame {
   #bridge;
   #index;
   #gameRound;
-  #moveHistory;
+  #gameHistory;
 
   constructor(bridgeSize) {
     Validator.validBridgeSize(bridgeSize);
@@ -45,7 +45,7 @@ class BridgeGame {
 
   #initializeBridgeGameMeta() {
     this.#index = 0;
-    this.#moveHistory = [[], []];
+    this.#gameHistory = [[], []];
   }
 
   /**
@@ -55,23 +55,23 @@ class BridgeGame {
    */
   move(movement) {
     const MOVE_RESULT = this.#bridge.birdgeMovable(movement, this.#index);
-    this.recordMoveHistory(movement, MOVE_RESULT);
+    this.recordgameHistory(movement, MOVE_RESULT);
     this.#index += 1;
     return MOVE_RESULT;
   }
 
-  recordMoveHistory(movement, moveResult) {
+  recordgameHistory(movement, moveResult) {
     if (moveResult) {
-      this.#moveHistory[MOVEMENT_TABLE[movement]].push('O');
+      this.#gameHistory[MOVEMENT_TABLE[movement]].push('O');
     }
     if (!moveResult) {
-      this.#moveHistory[MOVEMENT_TABLE[movement]].push('X');
+      this.#gameHistory[MOVEMENT_TABLE[movement]].push('X');
     }
-    this.#moveHistory[MOVEMENT_TABLE.COUNTERPART[movement]].push(' ');
+    this.#gameHistory[MOVEMENT_TABLE.COUNTERPART[movement]].push(' ');
   }
 
-  moveHistoryStatus() {
-    OutputView.printMap(this.#moveHistory);
+  gameHistoryStatus() {
+    OutputView.printMap(this.#gameHistory);
   }
 
   /**

@@ -28,10 +28,13 @@ class Game {
   moveProcess(movement) {
     this.errorHandler('MOVEMENT', () => {
       Validator.validMovement(movement);
-      const MOVE_RESULT = this.#bridgeGame.move();
-      this.#bridgeGame.moveHistoryStatus();
+      const MOVE_RESULT = this.#bridgeGame.move(movement);
+      this.#bridgeGame.gameHistoryStatus();
+      return this.postAction(MOVE_RESULT);
     });
   }
+
+  postAction(moveResult) {}
 
   errorHandler(errorType, callback) {
     try {

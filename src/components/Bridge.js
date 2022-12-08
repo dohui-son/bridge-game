@@ -1,15 +1,15 @@
-const { makBridge, makeBridge } = require('../BridgeMaker.js');
+const { makeBridge } = require('../BridgeMaker.js');
 const { generate } = require('../BridgeRandomNumberGenerator.js');
 
 class Bridge {
-  #bridgeArray; // 이름 바꿔야함
+  #bridgeStatus;
 
   constructor(bridgeSize) {
-    this.#bridgeArray = makeBridge(bridgeSize, generate);
+    this.#bridgeStatus = makeBridge(bridgeSize, generate);
   }
 
   bridgeMovable(movement, bridgeIndex) {
-    if (movement === this.#bridgeArray[bridgeIndex]) {
+    if (movement === this.#bridgeStatus[bridgeIndex]) {
       return true;
     }
     return false;

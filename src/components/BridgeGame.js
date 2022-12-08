@@ -92,8 +92,8 @@ class BridgeGame {
     this.#gameHistory = [[], []];
   }
 
-  get gameRoundMeta() {
-    return this.#gameRound;
+  gameConclusion(gameResult) {
+    OutputView.printResult(gameResult, this.#gameRound, this.#gameHistory);
   }
 }
 

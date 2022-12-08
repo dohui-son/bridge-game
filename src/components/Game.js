@@ -24,11 +24,11 @@ class Game {
       Validator.validMovement(movement);
       const MOVE_RESULT = this.#bridgeGame.move(movement);
       this.#bridgeGame.gameHistoryStatus();
-      return this.postAction(MOVE_RESULT);
+      return this.#postAction(MOVE_RESULT);
     });
   }
 
-  postAction(moveResult) {
+  #postAction(moveResult) {
     if (!moveResult) {
       return InputView.readGameCommand.bind(this)(this.lostProcess);
     }
@@ -57,8 +57,7 @@ class Game {
   }
 
   #endOfGame(gameResult) {
-    const GAME_ROUND = this.#bridgeGame.gameRoundMeta;
-    OutputView.printResult(gameResult, GAME_ROUND);
+    this.#bridgeGame.gameConclusion(gameResult);
     OutputView.endReadWrite();
   }
 

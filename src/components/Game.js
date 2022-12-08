@@ -1,9 +1,10 @@
 const OutputView = require('../UI/OutputView.js');
 const InputView = require('../UI/InputView.js');
-const BridgeGame = require('../BridgeGame.js');
+const BridgeGame = require('./BridgeGame.js');
 
 class Game {
   #bridgeGame;
+  #bridgeSize; // 필요없을시 지울것
   constructor() {
     OutputView.printWelcome();
     InputView.readBridgeSize.bind(this)(this.createBridge);
@@ -12,7 +13,7 @@ class Game {
   createBridge(bridgeSize) {
     this.errorHandler('BRIDGE_SIZE', () => {
       this.#bridgeGame = new BridgeGame(bridgeSize);
-      //
+      this.#bridgeSize = parseInt(bridgeSize);
     });
   }
 

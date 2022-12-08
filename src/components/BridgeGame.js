@@ -13,13 +13,24 @@ const BridgeGameHandler = require('../uitls/BridgeGameHandler.js');
 const OutputView = require('../UI/OutputView.js');
 
 const Validator = require('../uitls/Validator.js');
+const Bridge = require('./Bridge.js');
 
 class BridgeGame {
   #bridgeSize;
+  #bridge;
+  #index;
+  #gameRound;
 
   constructor(bridgeSize) {
     Validator.validBridgeSize(bridgeSize);
-    this.testHi();
+    this.#initializeBridge(bridgeSize);
+    this.#index = 0;
+    this.#gameRound = 1;
+  }
+
+  #initializeBridge(bridgeSize) {
+    this.#bridgeSize = parseInt(bridgeSize);
+    this.#bridge = new Bridge(this.#bridgeSize);
   }
 
   /**

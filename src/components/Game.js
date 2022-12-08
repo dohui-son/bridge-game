@@ -10,22 +10,25 @@ class Game {
   }
 
   createBridge(bridgeSize) {
-    this.tryCatch(() => {
+    this.errorHandler('BRIDGE_SIZE', () => {
       this.#bridgeGame = new BridgeGame(bridgeSize);
       //
     });
   }
 
-  errorHandler(callback) {
+  errorHandler(errorType, callback) {
     try {
       callback();
     } catch (error) {
-      this.errorResponse(error);
+      this.errorResponse(errorType);
     }
   }
 
-  errorResponse(error) {
-    console.log(error);
+  errorResponse(errorType) {
+    OutputView.printError(errorType);
+    if (errorType === 'BRIDGE_SIZE') {
+      InputView.readBridgeSize.bind(this)(this.createBridge);
+    }
     //OutputView.printError('BRIDGE_SIZE');
   }
 }

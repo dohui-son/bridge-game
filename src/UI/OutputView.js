@@ -14,6 +14,12 @@ const PREFIX = '\n[ERROR] ';
 const ERROR_MESSAGE = {
   BRIDGE_SIZE: '다리 길이는 3부터 20 사이의 숫자여야 합니다.\n',
   MOVEMENT: '이동할 칸은 대문자 U나 D만 입력해주세요. (위: U, 아래: D)\n',
+  RETRY: '게임 다시 시도 여부는 대문자 R이나 Q만 입력해주세요. (재시도: R, 종료: Q)',
+};
+
+const RESULT_MESSAGE = {
+  WIN: '성공',
+  LOST: '실패',
 };
 
 const OutputView = {
@@ -39,11 +45,17 @@ const OutputView = {
    * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
   printResult(gameRoundResult, gameRound) {
-    console.log('Todo: 성공');
+    Console.print(
+      `\n게임 성공 여부: ${RESULT_MESSAGE[gameRoundResult]}\n총 시도한 횟수: ${gameRound}`
+    );
   },
 
   printError(errorType) {
     Console.print(PREFIX + ERROR_MESSAGE[errorType]);
+  },
+
+  endReadWrite() {
+    Console.close();
   },
 };
 

@@ -75,10 +75,10 @@ class BridgeGame {
   }
 
   gameStatus() {
-    if (this.#bridgeSize - 1 === this.#index) {
-      return true;
+    if (this.#bridgeSize === this.#index) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   /**
@@ -90,6 +90,10 @@ class BridgeGame {
     this.#gameRound += 1;
     this.#index = 0;
     this.#gameHistory = [[], []];
+  }
+
+  get gameRoundMeta() {
+    return this.#gameRound;
   }
 }
 

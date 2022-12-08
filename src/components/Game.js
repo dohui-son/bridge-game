@@ -5,7 +5,6 @@ const Validator = require('../uitls/Validator.js');
 
 class Game {
   #bridgeGame;
-  #bridgeSize; // 필요없을시 지울것
 
   constructor() {
     OutputView.printWelcome();
@@ -15,8 +14,8 @@ class Game {
   createBridge(bridgeSize) {
     this.#errorHandler('BRIDGE_SIZE', () => {
       this.#bridgeGame = new BridgeGame(bridgeSize);
-      this.#bridgeSize = parseInt(bridgeSize);
-      return InputView.readMoving.bind(this)(this.moveProcess); //this.makeMovement();
+
+      return InputView.readMoving.bind(this)(this.moveProcess);
     });
   }
 
@@ -35,13 +34,11 @@ class Game {
     }
 
     const CONTINUE = this.#bridgeGame.gameStatus();
-
     if (CONTINUE) {
-      InputView.readMoving.bind(this)(this.moveProcess);
+      return InputView.readMoving.bind(this)(this.moveProcess);
     }
     if (!CONTINUE) {
-      // 게임을 성공적으로 마침!
-      this.#endOfGame('WIN');
+      return this.#endOfGame('WIN');
     }
   }
 
@@ -50,6 +47,7 @@ class Game {
       Validator.validRetryCommand(retryCommand);
       if (retryCommand === 'R') {
         this.#bridgeGame.retry();
+
         return InputView.readMoving.bind(this)(this.moveProcess);
       }
       if (retryCommand === 'Q') {
@@ -59,7 +57,9 @@ class Game {
   }
 
   #endOfGame(gameResult) {
-    // Todo: 게임 결과 출력후 게임 마침 콘솔 닫아주기
+    const GAME_ROUND = this.#bridgeGame.gameRoundMeta;
+    OutputView.printResult(gameResult, GAME_ROUND);
+    OutputView.endReadWrite();
   }
 
   #errorHandler(errorType, callback) {

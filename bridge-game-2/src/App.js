@@ -7,7 +7,7 @@ const Game = require('../src/components/Game.js');
 class App {
 	#game;
 	play() {
-		const game = new Game();
+		this.#game = new Game();
 	}
 }
 

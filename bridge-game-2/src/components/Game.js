@@ -64,9 +64,9 @@ class Game {
 	}
 
 	#retryHandler() {
-		this.#gameRound += 1;
 		this.#moveIndex = 0;
 		this.#bridgeGame.retry();
+		this.#gameRound += 1;
 		return InputView.readMoving.bind(this)(this.#moveHandler);
 	}
 

@@ -63,6 +63,12 @@ class Game {
 		return InputView.readMoving.bind(this)(this.#moveHandler);
 	}
 
+	#retryHandler() {
+		this.#gameRound += 1;
+		this.#bridgeGame.retry();
+		return InputView.readMoving.bind(this)(this.#moveHandler);
+	}
+
 	lostHandler(quitCommand) {
 		this.#errorHandler('QUIT', () => {
 			Validator.validGameCommand(quitCommand);
@@ -70,12 +76,14 @@ class Game {
 				return this.#endOfGame('LOST');
 			}
 
-			return InputView.readMoving.bind(this)(this.#moveHandler);
+			return this.#retryHandler();
 		});
 	}
 
 	#endOfGame(gameResult) {
 		console.log('게임 끝 - 게임 결과:' + gameResult);
+		const MOVE_HISTORY = this.#bridgeGame.moveHistoryGetter;
+		OutputView.printResult(MOVE_HISTORY, gameResult, this.#gameRound);
 	}
 
 	#errorHandler(errorType, callback) {

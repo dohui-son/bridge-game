@@ -7,18 +7,14 @@ const BridgeGame = require('../components/BridgeGame.js');
 class Game {
 	#bridgeGame;
 	#bridge;
-	#gameRound;
-	#moveIndex;
 
 	constructor() {
-		this.initializeGame();
+		this.#initializeGame();
 	}
 
-	initializeGame() {
+	#initializeGame() {
 		OutputView.printWelcome();
 		InputView.readBridgeSize.bind(this)(this.#bridgeSizeHandler);
-		this.#gameRound = 1;
-		this.#moveIndex = 0;
 	}
 
 	#bridgeSizeHandler(bridgeSizeInput) {
@@ -38,10 +34,9 @@ class Game {
 	#moveHandler(movement) {
 		this.#errorHandler('MOVEMENT', () => {
 			Validator.validMovement(movement);
-			const MOVE_RESULT = this.#bridge.moveCapability(movement, this.#moveIndex);
+			const MOVE_RESULT = this.#bridge.crossBridge(movement);
 			this.#bridgeGame.move(movement, MOVE_RESULT);
 			this.#showMoveStatus();
-			this.#moveIndex += 1;
 			return this.#gameHandler(MOVE_RESULT);
 		});
 	}
@@ -53,24 +48,22 @@ class Game {
 
 	#gameHandler(moveSuccess) {
 		if (!moveSuccess) {
-			return InputView.readGameCommand.bind(this)(this.lostHandler);
+			return InputView.readGameCommand.bind(this)(this.#lostHandler);
 		}
-		const IS_GAME_END = this.#bridge.crossBridgeComplete(this.#moveIndex);
+		const IS_GAME_END = this.#bridge.crossBridgeComplete();
 		if (IS_GAME_END) {
 			return this.#endOfGame('WIN');
 		}
-
 		return InputView.readMoving.bind(this)(this.#moveHandler);
 	}
 
 	#retryHandler() {
-		this.#moveIndex = 0;
+		this.#bridge.initializeBridgeIndex();
 		this.#bridgeGame.retry();
-		this.#gameRound += 1;
 		return InputView.readMoving.bind(this)(this.#moveHandler);
 	}
 
-	lostHandler(quitCommand) {
+	#lostHandler(quitCommand) {
 		this.#errorHandler('QUIT', () => {
 			Validator.validGameCommand(quitCommand);
 			if (quitCommand === 'Q') {
@@ -83,7 +76,8 @@ class Game {
 
 	#endOfGame(gameResult) {
 		const MOVE_HISTORY = this.#bridgeGame.moveHistoryGetter;
-		OutputView.printResult(MOVE_HISTORY, gameResult, this.#gameRound);
+		const GAME_ROUND = this.#bridgeGame.gameRoundGetter;
+		OutputView.printResult(MOVE_HISTORY, gameResult, GAME_ROUND);
 		OutputView.endUI();
 	}
 
@@ -105,7 +99,7 @@ class Game {
 			InputView.readMoving.bind(this)(this.#moveHandler);
 		}
 		if (errorType === 'QUIT') {
-			InputView.readGameCommand.bind(this)(this.lostHandler);
+			InputView.readGameCommand.bind(this)(this.#lostHandler);
 		}
 	}
 }

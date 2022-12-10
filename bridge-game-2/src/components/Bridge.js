@@ -14,6 +14,13 @@ class Bridge {
 	#generateBridge() {
 		this.#bridgeStatus = makeBridge(this.#bridgeSize, generate);
 	}
+
+	moveCapability(movement, moveIndex) {
+		if (this.#bridgeStatus[moveIndex] === movement) {
+			return true;
+		}
+		return false;
+	}
 }
 
 module.exports = Bridge;

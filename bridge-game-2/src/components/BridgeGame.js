@@ -13,9 +13,9 @@ BridgeGame의 메서드의 이름은 변경할 수 없고, 인자는 필요에 �
 
 */
 class BridgeGame {
-	#gameRound;
+	#gameHistory;
 	constructor() {
-		this.#gameRound = 1;
+		this.#gameHistory = [[], []];
 	}
 	/**
 	 * 사용자가 칸을 이동할 때 사용하는 메서드

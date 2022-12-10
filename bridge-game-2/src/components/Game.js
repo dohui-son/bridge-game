@@ -7,6 +7,7 @@ class Game {
 	#bridgeGame;
 	#bridgeSize;
 	#bridge;
+	#gameRound;
 
 	constructor() {
 		OutputView.printWelcome();
@@ -15,6 +16,7 @@ class Game {
 
 	initializeGame() {
 		InputView.readBridgeSize.bind(this)(this.bridgeSizeHandler);
+		this.#gameRound = 1;
 	}
 
 	bridgeSizeHandler(bridgeSizeInput) {
@@ -32,7 +34,8 @@ class Game {
 	}
 
 	#userMove(movement) {
-		this.#errorHandler('MOVE', () => {
+		this.#errorHandler('MOVEMENT', () => {
+			Validator.validMovement(movement);
 			// const MOVE_RESULT = this.#bridge.moveCapability(movement);
 			// this.#bridgeGame.move(MOVE_RESULT);
 		});
@@ -51,6 +54,9 @@ class Game {
 		OutputView.printError(errorType);
 		if (errorType === 'BRIDGE_SIZE') {
 			InputView.readBridgeSize.bind(this)(this.bridgeSizeHandler);
+		}
+		if (errorType === 'MOVEMENT') {
+			InputView.readMoving.bind(this)(this.#userMove);
 		}
 	}
 }

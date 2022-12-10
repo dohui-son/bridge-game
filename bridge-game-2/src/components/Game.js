@@ -95,9 +95,9 @@ class Game {
 		if (errorType === 'MOVEMENT') {
 			InputView.readMoving.bind(this)(this.#moveHandler);
 		}
-		// if (errorType === 'QUIT') {
-		// 	InputView.readGameCommand.bind(this)(this.lostHandler);
-		// }
+		if (errorType === 'QUIT') {
+			InputView.readGameCommand.bind(this)(this.lostHandler);
+		}
 	}
 }
 

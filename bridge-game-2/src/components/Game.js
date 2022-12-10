@@ -15,11 +15,11 @@ class Game {
 	}
 
 	initializeGame() {
-		InputView.readBridgeSize.bind(this)(this.bridgeSizeHandler);
+		InputView.readBridgeSize.bind(this)(this.#bridgeSizeHandler);
 		this.#gameRound = 1;
 	}
 
-	bridgeSizeHandler(bridgeSizeInput) {
+	#bridgeSizeHandler(bridgeSizeInput) {
 		this.#errorHandler('BRIDGE_SIZE', () => {
 			Validator.validBridgeSize(bridgeSizeInput);
 			this.#bridgeSize = parseInt(bridgeSizeInput);
@@ -30,10 +30,10 @@ class Game {
 	#createBridge() {
 		this.#bridge = new Bridge(this.#bridgeSize);
 		this.#bridgeGame = new Bridge();
-		return InputView.readMoving.bind(this)(this.#userMove);
+		return InputView.readMoving.bind(this)(this.#moveHandler);
 	}
 
-	#userMove(movement) {
+	#moveHandler(movement) {
 		this.#errorHandler('MOVEMENT', () => {
 			Validator.validMovement(movement);
 			// const MOVE_RESULT = this.#bridge.moveCapability(movement);
@@ -45,18 +45,17 @@ class Game {
 		try {
 			callback();
 		} catch (error) {
-			console.log(error);
+			OutputView.printError(errorType);
 			this.#errorResponse.bind(this)(errorType);
 		}
 	}
 
 	#errorResponse(errorType) {
-		OutputView.printError(errorType);
 		if (errorType === 'BRIDGE_SIZE') {
-			InputView.readBridgeSize.bind(this)(this.bridgeSizeHandler);
+			InputView.readBridgeSize.bind(this)(this.#bridgeSizeHandler);
 		}
 		if (errorType === 'MOVEMENT') {
-			InputView.readMoving.bind(this)(this.#userMove);
+			InputView.readMoving.bind(this)(this.#moveHandler);
 		}
 	}
 }

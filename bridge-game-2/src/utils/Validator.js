@@ -8,6 +8,12 @@ const Validator = {
 			throw new Error('[ERROR]');
 		}
 	},
+
+	validMovement(movement) {
+		if (movement !== 'U' && movement !== 'D') {
+			throw new Error('[ERROR]');
+		}
+	},
 };
 
 module.exports = Validator;

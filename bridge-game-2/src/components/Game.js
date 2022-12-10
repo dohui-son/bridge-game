@@ -7,11 +7,10 @@ class Game {
 	#bridgeGame;
 	#bridgeSize;
 	#bridge;
-	#gameRound;
+
 	constructor() {
 		OutputView.printWelcome();
 		this.initializeGame();
-		this.#gameRound = 1;
 	}
 
 	initializeGame() {
@@ -28,6 +27,15 @@ class Game {
 
 	#createBridge() {
 		this.#bridge = new Bridge(this.#bridgeSize);
+		this.#bridgeGame = new Bridge();
+		return InputView.readMoving.bind(this)(this.#userMove);
+	}
+
+	#userMove(movement) {
+		this.#errorHandler('MOVE', () => {
+			// const MOVE_RESULT = this.#bridge.moveCapability(movement);
+			// this.#bridgeGame.move(MOVE_RESULT);
+		});
 	}
 
 	#errorHandler(errorType, callback) {

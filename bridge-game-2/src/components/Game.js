@@ -12,11 +12,11 @@ class Game {
 	#moveIndex;
 
 	constructor() {
-		OutputView.printWelcome();
 		this.initializeGame();
 	}
 
 	initializeGame() {
+		OutputView.printWelcome();
 		InputView.readBridgeSize.bind(this)(this.#bridgeSizeHandler);
 		this.#gameRound = 1;
 		this.#moveIndex = 0;
@@ -47,8 +47,8 @@ class Game {
 	}
 
 	#showMoveStatus() {
-		const moveHistory = this.#bridgeGame.moveHistoryGetter;
-		console.log(moveHistory);
+		const MOVE_HISTORY = this.#bridgeGame.moveHistoryGetter;
+		OutputView.printMap(MOVE_HISTORY);
 	}
 
 	#gameHandler(moveResult) {

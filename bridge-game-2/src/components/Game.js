@@ -6,7 +6,6 @@ const BridgeGame = require('../components/BridgeGame.js');
 
 class Game {
 	#bridgeGame;
-	#bridgeSize;
 	#bridge;
 	#gameRound;
 	#moveIndex;
@@ -25,13 +24,13 @@ class Game {
 	#bridgeSizeHandler(bridgeSizeInput) {
 		this.#errorHandler('BRIDGE_SIZE', () => {
 			Validator.validBridgeSize(bridgeSizeInput);
-			this.#bridgeSize = parseInt(bridgeSizeInput);
-			return this.#createBridge();
+			const BRIDGE_SIZE = parseInt(bridgeSizeInput);
+			return this.#createBridge(BRIDGE_SIZE);
 		});
 	}
 
-	#createBridge() {
-		this.#bridge = new Bridge(this.#bridgeSize);
+	#createBridge(bridgeSize) {
+		this.#bridge = new Bridge(bridgeSize);
 		this.#bridgeGame = new BridgeGame();
 		return InputView.readMoving.bind(this)(this.#moveHandler);
 	}
@@ -42,6 +41,7 @@ class Game {
 			const MOVE_RESULT = this.#bridge.moveCapability(movement, this.#moveIndex);
 			this.#bridgeGame.move(movement, MOVE_RESULT);
 			this.#showMoveStatus();
+			this.#moveIndex += 1;
 			return this.#gameHandler(MOVE_RESULT);
 		});
 	}
@@ -51,8 +51,31 @@ class Game {
 		OutputView.printMap(MOVE_HISTORY);
 	}
 
-	#gameHandler(moveResult) {
-		console.log(moveResult);
+	#gameHandler(moveSuccess) {
+		if (!moveSuccess) {
+			return InputView.readGameCommand.bind(this)(this.lostHandler);
+		}
+		const IS_GAME_END = this.#bridge.crossBridgeComplete(this.#moveIndex);
+		if (IS_GAME_END) {
+			this.#endOfGame('WIN');
+		}
+
+		return InputView.readMoving.bind(this)(this.#moveHandler);
+	}
+
+	lostHandler(quitCommand) {
+		this.#errorHandler('QUIT', () => {
+			Validator.validGameCommand(quitCommand);
+			if (quitCommand === 'Q') {
+				return this.#endOfGame('LOST');
+			}
+
+			return InputView.readMoving.bind(this)(this.#moveHandler);
+		});
+	}
+
+	#endOfGame(gameResult) {
+		console.log('게임 끝 - 게임 결과:' + gameResult);
 	}
 
 	#errorHandler(errorType, callback) {
@@ -72,6 +95,9 @@ class Game {
 		if (errorType === 'MOVEMENT') {
 			InputView.readMoving.bind(this)(this.#moveHandler);
 		}
+		// if (errorType === 'QUIT') {
+		// 	InputView.readGameCommand.bind(this)(this.lostHandler);
+		// }
 	}
 }
 

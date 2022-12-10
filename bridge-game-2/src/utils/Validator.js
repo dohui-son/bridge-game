@@ -14,6 +14,12 @@ const Validator = {
 			throw new Error('[ERROR]');
 		}
 	},
+
+	validGameCommand(gameCommand) {
+		if (gameCommand !== 'Q' && gameCommand !== 'R') {
+			throw new Error('[ERROR]');
+		}
+	},
 };
 
 module.exports = Validator;

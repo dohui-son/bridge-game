@@ -21,6 +21,13 @@ class Bridge {
 		}
 		return false;
 	}
+
+	crossBridgeComplete(moveIndex) {
+		if (moveIndex === this.#bridgeSize) {
+			return true;
+		}
+		return false;
+	}
 }
 
 module.exports = Bridge;

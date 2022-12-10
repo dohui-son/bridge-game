@@ -57,7 +57,7 @@ class Game {
 		}
 		const IS_GAME_END = this.#bridge.crossBridgeComplete(this.#moveIndex);
 		if (IS_GAME_END) {
-			this.#endOfGame('WIN');
+			return this.#endOfGame('WIN');
 		}
 
 		return InputView.readMoving.bind(this)(this.#moveHandler);
@@ -65,6 +65,7 @@ class Game {
 
 	#retryHandler() {
 		this.#gameRound += 1;
+		this.#moveIndex = 0;
 		this.#bridgeGame.retry();
 		return InputView.readMoving.bind(this)(this.#moveHandler);
 	}
@@ -81,9 +82,9 @@ class Game {
 	}
 
 	#endOfGame(gameResult) {
-		console.log('게임 끝 - 게임 결과:' + gameResult);
 		const MOVE_HISTORY = this.#bridgeGame.moveHistoryGetter;
 		OutputView.printResult(MOVE_HISTORY, gameResult, this.#gameRound);
+		OutputView.endUI();
 	}
 
 	#errorHandler(errorType, callback) {

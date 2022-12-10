@@ -5,6 +5,13 @@ const MESSAGE = {
 	BRIDGE_SIZE: '\n다리의 길이를 입력해주세요.\n',
 	MOVEMENT: '\n이동할 칸을 선택해주세요. (위: U, 아래: D)\n',
 	QUIT: '\n게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)\n',
+	ENDING: '최종 게임 결과',
+	GAME_SUCCESS: {
+		WIN: '성공',
+		LOST: '실패',
+	},
+	GAME_SUCCESS_SUBTITLE: '\n게임 성공 여부: ',
+	GAME_ROUND_SUBTITLE: '총 시도한 횟수: ',
 };
 
 const ERROR_MESSAGE = {

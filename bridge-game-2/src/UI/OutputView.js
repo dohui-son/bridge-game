@@ -36,7 +36,16 @@ const OutputView = {
 	 * <p>
 	 * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
 	 */
-	printResult() {},
+	printResult(moveHistory, gameResult, gameRound) {
+		Console.print(MESSAGE['ENDING']);
+		this.printMap(moveHistory);
+		Console.print(MESSAGE['GAME_SUCCESS_SUBTITLE'] + MESSAGE['GAME_SUCCESS'][gameResult]);
+		Console.print(MESSAGE['GAME_ROUND_SUBTITLE'] + gameRound);
+	},
+
+	endUI() {
+		Console.close();
+	},
 };
 
 module.exports = OutputView;
